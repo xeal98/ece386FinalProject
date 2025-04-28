@@ -1,20 +1,4 @@
-'''Prints 'UP' or 'DOWN' based on edges on Jetson pin #29'''
-import Jetson.GPIO as GPIO
-
-# Init as digital input
-my_pin = 29
-GPIO.setmode(GPIO.BOARD)  # BOARD pin-numbering scheme
-GPIO.setup(my_pin, GPIO.IN)  # digital input
-
-print('Starting Demo! Move pin 29 between 0V and 3.3V')
-
-while True:
-    GPIO.wait_for_edge(my_pin, GPIO.RISING)
-    print('UP!')
-    GPIO.wait_for_edge(my_pin, GPIO.FALLING)
-    print('down')
-
-'''import sounddevice as sd
+import sounddevice as sd
 import numpy as np
 import numpy.typing as npt
 import torch
@@ -88,4 +72,3 @@ if __name__ == "__main__":
 
     print(speech)
     print(f"Transcription took {(end_time-start_time)/1000000000} seconds")
-'''
