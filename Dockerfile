@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/
 RUN pip install --upgrade --no-cache-dir pip && \
     pip install --no-cache-dir \
+    ollama \
     transformers==4.49.0\
     accelerate==1.5.2 \
     sounddevice \
