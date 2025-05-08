@@ -77,7 +77,6 @@ def transcribeMicrophone(pipe: Pipeline) -> str:
     return speech["text"]
 
 
-
 def intializeAIServer(address: str) -> Client:
     """This script evaluates an LLM prompt for processing text so that it can be used for the wttr.in API"""
 
