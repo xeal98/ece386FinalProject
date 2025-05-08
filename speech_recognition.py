@@ -168,8 +168,4 @@ if __name__ == "__main__":
         strToLargerModel = transcribeMicrophone(pipe)
         print(strToLargerModel)
         llmResponse = llm_parse_for_wttr(strToLargerModel, client, model)
-<<<<<<< HEAD
-        print(requests.get(f"wttr.in/{llmResponse})"))
-=======
         print((requests.get(f"http://wttr.in/{llmResponse}")).text)
->>>>>>> refs/remotes/origin/main
