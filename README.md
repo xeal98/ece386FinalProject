@@ -5,3 +5,5 @@ Doc: I looked up how to put a string variable in the middle of a string and used
 Additionally, I used gemma3:27b on my desktop computer to make improvements to the prompt that I was running on my surface with gemma3:4b. It made substantial improvements to the performance of the lower model. I essentially did a teacher and student without it being hooked together with code. It is important to note that the prompt I developed worked with gemma3:27b, but I wanted to see what improvements I could get out of 4b parameters. 
 
 Because I ran it locally, I cannot easily export the chat because it is in a specific JSON format; however, this is an easy feat for Claude which reproduced the conversation which is easier to [read here](https://claude.ai/share/22efa118-ff2f-447f-8736-d3a2ca684f2d)
+
+Iptables were trying to be called which are not supported on this kernal. Rebuilding the kernal is not an option, but using --network host is. It doesn't allow it to be completely containerized, but it does work. Massive ChatGPT deep dive to find this solution. [conversation](https://chatgpt.com/share/68144a67-0928-800f-813c-53f6c338cdf4)

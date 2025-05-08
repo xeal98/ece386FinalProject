@@ -4,7 +4,6 @@ import numpy.typing as npt
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, Pipeline, pipeline
 import sys
-import time
 import requests
 import Jetson.GPIO as GPIO  # Allows for Jetson GPIO passthrough to docker and the usage of it in python
 from ollama import Client
@@ -69,14 +68,14 @@ def transcribeMicrophone(pipe: Pipeline) -> str:
     print("Done")
 
     print("Transcribing...")
-    start_time = time.time_ns()
+    # start_time = time.time_ns()
     speech = pipe(audio)
-    end_time = time.time_ns()
-    print("Done")
+    # end_time = time.time_ns()
 
-    print(speech)
     # Not super necessary for testing
-    print(f"Transcription took {(end_time-start_time)/1000000000} seconds")
+    # print(f"Transcription took {(end_time-start_time)/1000000000} seconds")
+    return speech["text"]
+
 
 
 def intializeAIServer(address: str) -> Client:
@@ -143,30 +142,34 @@ def llm_parse_for_wttr(input_str: str, client: Client, LLM_MODEL: str) -> str:
             },
         ],
     )
-
     return llmResponse.message.content
 
 
 if __name__ == "__main__":
     model = "gemma3:27b"
-    llmAddress = "http://ai.dfec.xyz:11434"
+    llmAddress = "10.1.69.213:11434"
     pipe = intializeTheModel()  # Sets up the model in the GPU to keep it hot
     client = intializeAIServer(llmAddress)
 
-    sd.default.device = (
+    sd.default.device = (  # Had to add this line to make sure that it picks up the USB microphone
         "USB Audio",
         None,
-    )  # Had to add this line to make sure that it picks up the USB microphone
+    )
 
     # Init as digital input
     my_pin = 29
     GPIO.setmode(GPIO.BOARD)  # BOARD pin-numbering scheme
     GPIO.setup(my_pin, GPIO.IN)  # digital input
 
-    print("Starting Demo! Move pin 29 between 0V and 3.3V")
+    print("Ready to Provide Weather, HUMAN!")
 
     while True:
         GPIO.wait_for_edge(my_pin, GPIO.RISING, bouncetime=1000)
         strToLargerModel = transcribeMicrophone(pipe)
+        print(strToLargerModel)
         llmResponse = llm_parse_for_wttr(strToLargerModel, client, model)
+<<<<<<< HEAD
         print(requests.get(f"wttr.in/{llmResponse})"))
+=======
+        print((requests.get(f"http://wttr.in/{llmResponse}")).text)
+>>>>>>> refs/remotes/origin/main

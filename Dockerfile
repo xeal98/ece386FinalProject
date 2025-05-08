@@ -18,5 +18,10 @@ COPY speech_recognition.py .
 ENV HF_HOME="/huggingface/"
 ENV JETSON_MODEL_NAME=JETSON_ORIN_NANO
 ENTRYPOINT ["python", "speech_recognition.py"]
+<<<<<<< HEAD
 # docker buildx build . -t whisper
+=======
+
+# sudo docker buildx build . -t whisper
+>>>>>>> refs/remotes/origin/main
 # sudo docker run -it --rm --device=/dev/snd --device=/dev/gpiochip0 --runtime=nvidia --ipc=host -v huggingface:/huggingface/ whisper
