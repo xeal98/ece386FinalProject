@@ -33,6 +33,7 @@ def build_pipeline(model_id: str, torch_dtype: torch.dtype, device: str) -> Pipe
     )
     return pipe
 
+
 def record_audio(duration_seconds: int = 10) -> npt.NDArray:
     """Record duration_seconds of audio from default microphone.
     Return a single channel numpy array."""
@@ -44,6 +45,7 @@ def record_audio(duration_seconds: int = 10) -> npt.NDArray:
     sd.wait()
     # Model expects single axis
     return np.squeeze(audio, axis=1)
+
 
 def intializeTheModel() -> pipeline:
     # Get model as argument, default to "distil-whisper/distil-medium.en" if not given
@@ -60,6 +62,7 @@ def intializeTheModel() -> pipeline:
     print("Done")
     return pipe
 
+
 def transcribeMicrophone(pipe: Pipeline) -> str:
     print("Recording...")
     audio = record_audio()
@@ -75,6 +78,7 @@ def transcribeMicrophone(pipe: Pipeline) -> str:
     # Not super necessary for testing
     print(f"Transcription took {(end_time-start_time)/1000000000} seconds")
 
+
 def intializeAIServer(address: str) -> Client:
     """This script evaluates an LLM prompt for processing text so that it can be used for the wttr.in API"""
 
@@ -84,7 +88,8 @@ def intializeAIServer(address: str) -> Client:
     )
     return client
 
-def llm_parse_for_wttr(input_str:str, client:Client, LLM_MODEL:str) -> str:
+
+def llm_parse_for_wttr(input_str: str, client: Client, LLM_MODEL: str) -> str:
     # Give the LLM a post
     # Strip the reponse for the result
     llmResponse = client.chat(
@@ -141,6 +146,7 @@ def llm_parse_for_wttr(input_str:str, client:Client, LLM_MODEL:str) -> str:
 
     return llmResponse.message.content
 
+
 if __name__ == "__main__":
     model = "gemma3:27b"
     llmAddress = "http://ai.dfec.xyz:11434"
@@ -164,4 +170,3 @@ if __name__ == "__main__":
         strToLargerModel = transcribeMicrophone(pipe)
         llmResponse = llm_parse_for_wttr(strToLargerModel, client, model)
         print(requests.get(f"wttr.in/{llmResponse})"))
-        
